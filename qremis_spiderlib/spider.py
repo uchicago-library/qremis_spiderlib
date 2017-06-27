@@ -2,6 +2,7 @@ import requests
 from time import sleep
 from logging import getLogger
 from redlock import RedLockFactory, RedLockError
+from .lib import response_200_json
 
 
 log = getLogger(__name__)
@@ -9,16 +10,6 @@ log = getLogger(__name__)
 
 def make_lock_factory(connection_details):
     return RedLockFactory(connection_details)
-
-
-def response_200_json(r):
-    if not r.status_code == 200:
-        raise ValueError()
-    try:
-        rj = r.json()
-    except:
-        raise
-    return rj
 
 
 def iter_object_pages(qremis_api_url, cursor="0"):
