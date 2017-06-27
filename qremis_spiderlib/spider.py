@@ -34,18 +34,23 @@ class QremisApiSpider:
         self.work_callback = work_callback
         self.lock_factory = lock_factory
 
-    def crawl(self):
+    def crawl(self, delay=.1):
         while True:
-            for page in iter_object_pages(self.qremis_api_url):
-                for id in iter_ids(page):
-                    # Be nice to the web server
-                    sleep(.1)
-                    try:
-                        with self.lock_factory.create_lock(id):
-                            if self.filter_callback(id, self.qremis_api_url):
-                                self.work_callback(id, self.qremis_api_url)
-                    except RedLockError:
-                        # We couldn't acquire the lock,
-                        # another worker is already processing
-                        # this entry
-                        pass
+            try:
+                for page in iter_object_pages(self.qremis_api_url):
+                    for id in iter_ids(page):
+                        # Be nice to the web server/locking server
+                        sleep(delay)
+                        try:
+                            with self.lock_factory.create_lock(id):
+                                if self.filter_callback(id, self.qremis_api_url):
+                                    self.work_callback(id, self.qremis_api_url)
+                        except RedLockError:
+                            # We couldn't acquire the lock,
+                            # another worker is already processing
+                            # this entry
+                            pass
+            except Exception as e:
+                # Log the uncaught exception, sleep 5 seconds, go again
+                log.critical(str(e))
+                sleep(5)
