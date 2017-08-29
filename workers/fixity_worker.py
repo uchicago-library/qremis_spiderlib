@@ -177,6 +177,7 @@ def main():
     args = parser.parse_args()
 
     logging.basicConfig(level=args.verbosity)
+    logging.getLogger("urllib3").setLevel("WARN")
 
     fixity_check_cb = partial(fixity_check, args.archstor_api_url)
     filter_cb = partial(no_fixity_for, args.fixity_max_age)

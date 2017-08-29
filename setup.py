@@ -6,6 +6,7 @@ def readme():
 
 setup(
     name = "qremis_spiderlib",
+    version = "0.0.1"
     description = "A crawler library for the qremis_api",
     long_description = readme(),
     packages = find_packages(
