@@ -2,10 +2,14 @@ language: python
 python:
     - "3.5"
 before_script:
-    - pip install coverage && pip install python-coveralls
-install: "pip install git+git://github.com/bnbalsamo/pyqremis.git && pip install ."
-services:
-    - redis
-script: coverage run --source qremis_spiderlib tests.py
+    - pip install pytest coverage python-coveralls flake8
+install: 
+    - "python setup.py install"
+    - "pip install -r requirements.txt"
+    - "pip install -r requirements_dev.txt"
+script: 
+    - coverage run --source qremis_spiderlib -m py.test 
+    - flake8 --exit-zero
 after_success:
+    - coverage report
     - coveralls

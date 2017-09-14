@@ -84,7 +84,7 @@ def fixity_check(archstor_api_url, identifier, qremis_api_url):
     if rec_md5 is None:
         raise ValueError()
     hasher = hashlib.md5()
-    r = requests.get(archstor_api_url+identifier, stream=True)
+    r = requests.get(archstor_api_url + identifier, stream=True)
     for chunk in r.iter_content(chunk_size=8096):
         if chunk:
             hasher.update(chunk)
@@ -172,7 +172,7 @@ def main():
         "--fixity_max_age", help="How long ago a fixity event" +
         "can have occured before we run another - in seconds",
         type=int,
-        default=60*60*24*7*4
+        default=60 * 60 * 24 * 7 * 4
     )
     args = parser.parse_args()
 
