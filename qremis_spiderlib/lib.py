@@ -2,6 +2,7 @@ import pyqremis
 import requests
 import datetime
 
+
 def seconds_since(x, strptime_format="%Y-%m-%d %H:%M:%S.%f"):
     if isinstance(x, str):
         x = datetime.datetime.strptime(x, strptime_format)
