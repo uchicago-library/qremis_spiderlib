@@ -49,10 +49,18 @@ class QremisApiSpider:
                         try:
                             with self.lock_factory.create_lock(id):
                                 if self.filter_callback(id, self.qremis_api_url):
-                                    log.debug("Filter callback returned True, processing. Id = {}".format(id))
+                                    log.debug(
+                                        "Filter callback returned True, processing. Id = {}".format(
+                                            id
+                                        )
+                                    )
                                     self.work_callback(id, self.qremis_api_url)
                                 else:
-                                    log.debug("Filter calback returned false, skipping. Id = {}".format(id))
+                                    log.debug(
+                                        "Filter calback returned false, skipping. Id = {}".format(
+                                            id
+                                        )
+                                    )
                         except RedLockError:
                             log.debug("Couldn't obtain the lock. Id = {}".format(id))
                             # We couldn't acquire the lock,
