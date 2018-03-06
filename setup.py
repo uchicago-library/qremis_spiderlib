@@ -18,9 +18,9 @@ setup(
         ]
     ),
     include_package_data=True,
-    url='https://github.com/bnbalsamo/qremis_spiderlib',
+    url='https://github.com/uchicago-library/qremis_spiderlib',
     dependency_links=[
-        'https://github.com/bnbalsamo/pyqremis' +
+        'https://github.com/uchicago-library/pyqremis' +
         '/tarball/master#egg=pyqremis'
     ],
     install_requires=[
